@@ -1,0 +1,53 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Login</title>
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.16.0/umd/popper.min.js"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+    <link rel="stylesheet" href="/stylesheets/style.css" />
+</head>
+
+<body>
+    <div class="container my-3">
+        <h4 style="text-align: center;">Đăng nhập</h4>
+        <form action="/dangnhapkhoa" method="POST">
+            <div class="form-group">
+                <label for="taikhoan">Tên đăng nhập: </label>
+                <input type="username" value="" name="taikhoan" id="taikhoan" class="form-control" placeholder="Tài khoản">
+            </div>
+            <div class="form-group">
+                <label for="matkhau">Mật khẩu: </label>
+                <input type="password" value="" name="matkhau" id="matkhau" class="form-control" placeholder="Mật khẩu">
+            </div>
+
+            <% if(locals.errorTK){ %>
+                <div class="alert alert-danger">
+                    <p>
+                        <%= errorTK %>
+                    </p>
+                </div>
+                <% } %>
+
+                    <button type="submit" class="btn btn-success">Đăng nhập</button>
+        </form>
+        <div class="mt-4 text-center login-with-social">
+            <% if(locals.errorGG){ %>
+                <div class="alert alert-danger">
+                    <p>
+                        <%= errorGG %>
+                    </p>
+                </div>
+                <% } %>
+                    <a href="/auth/google" style="text-transform:none">
+                        <button type="button" class="btn btn-outline-danger btn-block"><i class="mdi mdi-google-plus"></i>Đăng nhập bằng email sinh viên</button>
+                    </a>
+        </div>
+    </div>
+</body>
+
+</html>

@@ -1,0 +1,37 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Trang ca nhan</title>
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.16.0/umd/popper.min.js"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+    <link rel="stylesheet" href="/stylesheets/style.css" />
+</head>
+
+<body>
+    <div class="pos-f-t">
+        <nav class="navbar navbar-dark bg-dark">
+            <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarToggleExternalContent" aria-controls="navbarToggleExternalContent" aria-expanded="false" aria-label="Toggle navigation">
+            <span class="navbar-toggler-icon"></span>
+          </button>
+        </nav>
+        <div class="collapse" id="navbarToggleExternalContent">
+            <%- include('./layout/linktrang.ejs') %>
+        </div>
+    </div><br>
+    <div class="container">
+        <div class="card mb-3 hientintuc" id="hientintuc">
+            <%- include('./layout/baiviet.ejs') %>
+        </div>
+    </div>
+    <input type="text" id="solanloadbaiviet" style="display: none" value="1">
+    <input type="text" id="trang" style="display: none" value="<%= trang %>">
+</body>
+<script src="/javascripts/SinhVien/loadbaiviet.js"></script>
+
+</html>

@@ -1,0 +1,33 @@
+<% if(thongtinsinhvien.chucvu == "sinhvien"){ %> 
+    <div class="bg-white p-4">
+        <a href="/trangcanhan" class="text-center"><img style="width: 100px; height: 100px" class="rounded-circle avatar" src="anhdaidien/<%= thongtinsinhvien.anhdaidien%>" alt=""></a><br>
+        <a href="/trangcanhan" class=" text-center"><%= thongtinsinhvien.hovaten%></a><br>
+        <a href="/trangchu">Trang chủ</a> <br>
+        <a href="/thongtincanhan">Thông tin cá nhân</a><br>
+        <a href="/trangthongbao">Tất cả thông báo</a><br>
+        <a href="/dangxuattaikhoansinhvien">Đăng xuất</a>
+    </div>
+<% } %> 
+<% if(thongtinsinhvien.chucvu == "phong" || thongtinsinhvien.chucvu == "khoa"){ %> 
+    <div class="bg-white p-4">
+        <a href="" class="text-center"><img style="width: 100px; height: 100px" class="rounded-circle avatar" src="anhdaidien/<%= thongtinsinhvien.anhdaidien%>" alt=""></a><br>
+        <a href="" class=" text-center"><%= thongtinsinhvien.hovaten%></a><br>
+        <a href="/trangchu">Trang chủ</a> <br>
+        <a href="/trangthemthongbao">Thêm thông báo</a><br>
+        <a href="/trangthongbao">Tất cả thông báo</a><br>
+        <a href="/trangdoimatkhau">Đổi mật khẩu</a><br>
+        <a href="/dangxuattaikhoansinhvien">Đăng xuất</a>
+    </div>
+<% } %> 
+<% if(thongtinsinhvien.chucvu == "admin"){ %> 
+    <div class="bg-white p-4">
+        <a href="" class="text-center"><img style="width: 100px; height: 100px" class="rounded-circle avatar" src="anhdaidien/<%= thongtinsinhvien.anhdaidien%>" alt=""></a><br>
+        <a href="" class=" text-center"><%= thongtinsinhvien.hovaten%></a><br>
+        <a href="/trangchu">Trang chủ</a> <br>
+        <a href="/trangthemthongbao">Thêm thông báo</a><br>
+        <a href="/trangthongbao">Tất cả thông báo</a><br>
+        <a href="/trangtaotaikhoan">Tạo tài khoản</a><br>
+        <a href="/trangdoimatkhau">Đổi mật khẩu</a><br>
+        <a href="/dangxuattaikhoansinhvien">Đăng xuất</a>
+    </div>
+<% } %> 

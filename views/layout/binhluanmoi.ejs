@@ -1,0 +1,20 @@
+<div class="user-comment mb-3" id="<%= mabinhluan %>">
+    <div class="d-flex mb-2 ">
+        <div class="mr-2 ">
+            <a class="text-decoration-none text-dark" href="/trangcanhan/<%= thongtinsinhvien.email %>"><img style="width: 50px; height: 50px" class="rounded-circle avatar" src="anhdaidien/<%= thongtinsinhvien.anhdaidien  %>" alt=" "></a>
+        </div>
+        <div class="ml-2 mt-1 ">
+            <p>
+                <a class="text-decoration-none text-dark" href="/trangcanhan/<%= thongtinsinhvien.email %>">
+                    <b><%= thongtinsinhvien.hovaten  %></b>
+                </a>
+                <span class="text-muted"><%= thoigiandang  %></span>
+            </p>
+            <p class="txt-text"><%= noidung  %>
+                <small><a class="text-danger text-decoration-none xoabinhluan" data-mabinhluan="<%= mabinhluan %>" data-toggle="modal" data-target="#xoabinhluanmodal">Xoá</a></small>
+            </p>
+        </div>
+    </div>
+</div>
+
+<script src="/javascripts/SinhVien/xoabinhluan.js"></script>

@@ -1,0 +1,114 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Profile</title>
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.16.0/umd/popper.min.js"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+    <link rel="stylesheet" href="/stylesheets/style.css" />
+</head>
+
+<body>
+    <div class="pos-f-t">
+        <nav class="navbar navbar-dark bg-dark">
+            <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarToggleExternalContent" aria-controls="navbarToggleExternalContent" aria-expanded="false" aria-label="Toggle navigation">
+            <span class="navbar-toggler-icon"></span>
+          </button>
+        </nav>
+        <div class="collapse" id="navbarToggleExternalContent">
+            <%- include('./layout/linktrang.ejs') %>
+        </div>
+    </div><br>
+    <div class="container my-3">
+        <h4>Thông tin cá nhân</h4>
+        <form id="doithongtincanhan">
+            <div class="form-group">
+                <label>
+                    Tên hiển thị:
+                </label>
+                <div class="controls">
+                    <input type="text" class="form-control" id="hovaten" name="hovaten" value="<%= thongtinsinhvien.hovaten %>">
+                </div>
+
+            </div>
+            <div class="form-group">
+                <label>
+                    Lớp:
+                </label>
+                <div class="controls">
+                    <input type="text" class="form-control" id="lop" name="lop" value="<%= thongtinsinhvien.lop %>">
+                </div>
+            </div>
+            <div class="form-group">
+                <label>
+                    Khoa:
+                </label>
+                <strong><%= thongtinsinhvien.khoa %> </strong>
+                <div class="form-group">
+                    <label>
+                    Ảnh đại diện
+                </label>
+                    <div class="controls">
+                        <img style="width: 150px;" id="anhdaidien" class="anhcanhan" alt="your image" src="anhdaidien/<%= thongtinsinhvien.anhdaidien%>" /><br><br>
+                    </div>
+                    <div class="form-group"><label for="hinhanh" class="fa fa-image labletaianh text-warning">Chọn ảnh</label>
+                        <input type="file" name="hinhanh[]" id="hinhanh" class="hinhanh d-none" accept="image/*" onchange="document.getElementById('anhdaidien').src = window.URL.createObjectURL(this.files[0])">
+                    </div>
+                </div>
+                <button type="submit" class="btn btn-success">Quay lại</button>
+                <button style="margin-left: 50px;" type="submit" class="btn btn-success">Cập nhật thông tin</button>
+        </form>
+        <script>
+            $("#doithongtincanhan").submit(function(e) {
+                e.preventDefault();
+                var hovaten = $("#hovaten").val();
+                var lop = $("#lop").val();
+                var anhdaidienmoi = $('#hinhanh')[0].files;
+
+                var dataform = new FormData();
+                dataform.append("hovaten", hovaten);
+                dataform.append("lop", lop);
+
+                if (anhdaidienmoi.length != 0) {
+                    alert("thaydoianhdaidien")
+
+                    dataform.append("hinhanh[]", document.getElementById("hinhanh").files[0]);
+                    $.ajax({
+                        type: 'POST',
+                        url: '/thaydoianhdaidien',
+                        cache: false,
+                        contentType: false,
+                        processData: false,
+                        data: dataform,
+                        success: function(data) {
+                            location.reload();
+                        },
+                        error: function() {
+                            alert("Cập nhật thông tin không thành công!");
+                        }
+                    });
+                } else {
+                    $.ajax({
+                        type: 'POST',
+                        url: '/thaydoithongtincanhan',
+                        cache: false,
+                        contentType: false,
+                        processData: false,
+                        data: dataform,
+                        success: function(data) {
+                            location.reload();
+                        },
+                        error: function() {
+                            location.reload();
+                        }
+                    });
+                }
+            });
+        </script>
+</body>
+
+</html>

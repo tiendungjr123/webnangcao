@@ -1,0 +1,170 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <title>Trang chủ</title>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.16.0/umd/popper.min.js"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+    <link rel="stylesheet" href="/stylesheets/style.css" />
+</head>
+
+<body>
+    <div class="pos-f-t">
+        <nav class="navbar navbar-dark bg-dark">
+            <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarToggleExternalContent" aria-controls="navbarToggleExternalContent" aria-expanded="false" aria-label="Toggle navigation">
+      <span class="navbar-toggler-icon"></span>
+    </button>
+        </nav>
+        <div class="collapse" id="navbarToggleExternalContent">
+            <%- include('./layout/linktrang.ejs') %>
+        </div>
+    </div><br><br>
+    <div class="row">
+        <!-- modal-->
+        <!-- xóa bài viết -->
+        <div class="modal" id="xoabaivietmodal">
+            <div class="modal-dialog">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <div>
+                            <h4 class="modal-title">Xoá bài viết</h4>
+                        </div>
+                    </div>
+                    <div class="modal-body">
+                        <p>Bạn có muốn xóa bài viết không? <strong class="noidungbaiviet"></strong></p>
+                    </div>
+                    <div class="modal-footer">
+                        <button class="btn btn-danger xacnhanxoabaiviet">Xoá</button>
+                        <button class="btn btn-secondary" data-dismiss="modal">Đóng</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <!-- chỉnh sửa bài viết -->
+        <div class="modal" id="chinhsuabaivietmodal">
+            <div class="modal-dialog">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <div>
+                            <h4 class="modal-title">Chỉnh sửa nội dung bài viết</h4>
+                        </div>
+                    </div>
+                    <div class="modal-body">
+                        <div class="card mb-3">
+                            <div class="card-body">
+                                <textarea class="form-control textarea noidungbaiviet"></textarea>
+                            </div>
+                            <div class="card-footer">
+                                <button class="btn btn-danger float-right cursor-pointer" data-dismiss="modal">Đóng</button>
+                                <button class="btn btn-success float-right cursor-pointer xacnhanchinhsuabaiviet">Xác nhận</button>
+
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+            </div>
+        </div>
+        <!-- Xóa bình luận-->
+        <div class="modal" id="xoabinhluanmodal">
+            <div class="modal-dialog">
+                <div class="modal-content">
+
+                    <div class="modal-header">
+                        <div>
+                            <h4 class="modal-title">Xoá bình luận</h4>
+                        </div>
+                    </div>
+                    <div class="modal-body">
+                        <p>Bạn có muốn xóa bình luận? <strong class="noidung"></strong></p>
+                    </div>
+                    <div class="modal-footer">
+                        <button class="btn btn-danger xacnhanxoabinhluan">Xoá</button>
+                        <button class="btn btn-secondary" data-dismiss="modal">Đóng</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <!--Đăng bài-->
+    <div class="container">
+        <div class="row mbl">
+            <div class="col-md-8 col-xs-12">
+
+                <% if(thongtinsinhvien.chucvu == "sinhvien"){ %>
+                    <div class="well well-sm well-social-post mb-3 ">
+                        <form id="dangtin" name="dangtin" enctype="multipart/form-data">
+                            <ul class="list-inline " id='list_PostActions'>
+                                <li class='active font-weight-bold'>Đăng bài</li>
+                            </ul>
+                            <textarea rows="5" id="noidung_dangtin" name="noidung_dangtin" class="form-control textarea" placeholder="Hãy chia sẻ điều gì đó?"></textarea>
+                            <ul class='list-inline post-actions '>
+                                <input type="file" name="hinhanh_dangtin" id="hinhanh_dangtin" multiple="multiple" accept="image/*">
+                                <li class='float-right d-inline'><button type="submit" id="btndangtin" class='btn btn-dark btn-xs'>Đăng</button>
+                                </li>
+                            </ul>
+                        </form>
+                    </div><br><br><br>
+                    <% } %>
+
+                        <!-- Hiển thị các tin -->
+                        <div class="card mb-3 hientintuc" id="hientintuc">
+                            <%- include('./layout/baiviet.ejs') %>
+                        </div>
+
+            </div>
+            <% if(thongtinsinhvien.chucvu == "sinhvien"){ %>
+                <div class="col-md-4 col-xs-12">
+                    <div class="hienthithongbao">
+                        <div class="card shadow">
+                            <div id="thongbaomoi">
+
+                            </div>
+                            <div class="card-header py-3">
+                                <p class="text-primary m-0 font-weight-bold"> <a href="/trangthongbao">THÔNG BÁO MỚI</a></p>
+                            </div>
+                            <div class="card-body border-bottom border-primary">
+                                <% thongbao.forEach(function(tb){ %>
+                                    <a class="btn_chitietthongbao text-decoration-none text-dark" href="/trangchitietthongbao/<%= tb._id %>">
+                                        <div class="card-body border-bottom border-primary">
+                                            <% if(tb.chucvu == "khoa"){ %>
+                                                <div class="form-group">Đăng bởi: Khoa
+                                                    <%= tb.phongvakhoa %>
+                                                </div>
+                                                <% }else{ %>
+                                                    <div class="form-group">Đăng bởi:
+                                                        <%= tb.phongvakhoa %>
+                                                    </div>
+                                                    <% } %>
+                                                        <div class="form-group"><small>Thời gian: <%= tb.thoigian %> </small></div>
+                                                        <div class="form-group noidungthongbao"><b><%= tb.tieude %> </b></div>
+                                                        <p>Nội dung:</p>
+                                                        <div class="form-group noidungthongbao">
+                                                            <small><%= tb.noidung %> </small>
+                                                        </div>
+                                        </div>
+                                    </a>
+                                    <% }) %>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <% } %>
+        </div>
+    </div>
+    <input type="text" id="solanloadbaiviet" style="display: none" value="1">
+    <input type="text" id="trang" style="display: none" value="trangchu">
+</body>
+<script src="/javascripts/SinhVien/dangbaiviet.js"></script>
+<script src="/javascripts/SinhVien/xoabaiviet.js"></script>
+<script src="/javascripts/SinhVien/xoabinhluan.js"></script>
+<script src="/javascripts/SinhVien/chinhsuabaiviet.js"></script>
+<script src="/javascripts/SinhVien/loadbaiviet.js"></script>
+<script src="/socket.io/socket.io.js"></script>
+<script src="/javascripts/main.js"></script>
+
+</html>

@@ -1,0 +1,207 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Danh sách thông báo</title>
+    <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.7.0/css/all.css" integrity="sha384-lZN37f5QGtY3VHgisS14W3ExzMWZxybE1SJSEsQp9S+oqd12jhcu+A56Ebc1zFSJ" crossorigin="anonymous">
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.16.0/umd/popper.min.js"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+    <link rel="stylesheet" href="/stylesheets/style.css" />
+
+</head>
+
+<body>
+    <div class="pos-f-t">
+        <nav class="navbar navbar-dark bg-dark">
+            <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarToggleExternalContent" aria-controls="navbarToggleExternalContent" aria-expanded="false" aria-label="Toggle navigation">
+            <span class="navbar-toggler-icon"></span>
+          </button>
+        </nav>
+        <div class="collapse" id="navbarToggleExternalContent">
+            <div class="bg-white p-4">
+                <%- include('./layout/linktrang.ejs') %>
+            </div>
+        </div>
+    </div><br>
+    <div class="row mbl">
+        <!-- chỉnh sửa bài viết -->
+        <div class="modal" id="chinhsuathongbao">
+            <div class="modal-dialog">
+                <div class="modal-content">
+                    <!-- Modal Header -->
+                    <div class="modal-header">
+                        <div>
+                            <h4 class="modal-title">Chỉnh sửa thông báo</h4>
+                        </div>
+                    </div>
+                    <!-- Modal body -->
+                    <div class="modal-body">
+                        <input type="text" id="idthongbao" class="idthongbao" style="display: none;">
+                        <p>Tiêu đề</p>
+                        <input type="text" id="tieude" class="form-control input-login tieude">
+                        <p>Nội dung</p>
+                        <textarea id="noidung" class="form-control input-login noidung"></textarea>
+                    </div>
+                    <!-- Modal footer -->
+                    <div class="modal-footer">
+                        <button class="btn btn-success xacnhanchinhsuathongbao">Chỉnh sửa</button>
+                        <button class="btn btn-secondary" data-dismiss="modal">Đóng</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <!-- Xóa thông báo-->
+        <div class="modal" id="xoathongbao">
+            <div class="modal-dialog">
+                <div class="modal-content">
+
+                    <div class="modal-header">
+                        <div>
+                            <h4 class="modal-title">Xóa thông báo</h4>
+                        </div>
+                    </div>
+                    <div class="modal-body">
+                        <p>Bạn có chắc chắn xóa thông báo không? <strong class="noidung"></strong></p>
+                    </div>
+                    <div class="modal-footer">
+                        <button class="btn btn-danger xacnhanxoathongbao">Xoá</button>
+                        <button class="btn btn-secondary" data-dismiss="modal">Đóng</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="row">
+        <div class="container">
+            <div class="container-fluid">
+                <div class="card shadow">
+                    <div class="card-header py-3">
+                        <p class="text-primary m-0 font-weight-bold">Tất cả thông báo</p>
+                    </div>
+                    <div class="card-body">
+                        <form method="get" id="xemthongbao" action="trangthongbao">
+                            <div class="form-row">
+                                <div class="col-md-8">
+                                    <select class="form-control" name="phongvakhoa" id="phongvakhoa">
+                                        <option value="Tất cả thông báo">Tất cả thông báo</option>
+                                        <optgroup label="Phòng">
+                                            <% phongvakhoa.forEach(function(thongtin){%> 
+                                                <% if(thongtin.chucvu == "phong"){ %> 
+                                                    <% if(thongtin.ten == phongvakhoadangxem){ %> 
+                                                        <option value="<%= thongtin.ten %>" selected="selected"><%= thongtin.ten %> </option>
+                                                    <% }else{ %> 
+                                                        <option value="<%= thongtin.ten %>"><%= thongtin.ten %> </option>
+                                                    <% } %> 
+                                                <% } %> 
+                                            <% }) %> 
+                                        </optgroup>
+                                        <optgroup label="Khoa">
+                                            <% phongvakhoa.forEach(function(thongtin){%> 
+                                                <% if(thongtin.chucvu == "khoa"){ %> 
+                                                    <% if(thongtin.ten == phongvakhoadangxem){ %> 
+                                                        <option value="<%= thongtin.ten %>" selected="selected">Khoa <%= thongtin.ten %> </option>
+                                                    <% }else{ %> 
+                                                        <option value="<%= thongtin.ten %>">Khoa <%= thongtin.ten %> </option>
+                                                    <% } %> 
+                                                <% } %> 
+                                            <% }) %> 
+                                        </optgroup>
+                                    </select>
+                                    </select>
+                                    <input type="text" id="trang" name="trang" value="1" style="display: none">
+                                </div>
+                                <div class="col">
+                                    <div class="form-group"><button class="btn btn-primary btn-sm" type="submit"><a class="text-light">Tìm kiếm</a></button></div>
+                                </div>
+                            </div>
+                        </form>
+                        <% tatcathongbao.forEach(function(thongbao){ %>
+                            <div class="dropdown" id="thongbao<%= thongbao._id %>">
+                                <% if(thongtinsinhvien.chucvu == "admin"){ %>
+                                    <button class="btn btn-link dropdown-toggle " type="button" data-toggle="dropdown">
+                                        <i  class="fa fa-ellipsis-h "></i>
+                                    </button>
+                                    <div class="dropdown-menu dropdown-menu-right ">
+                                        <a class="dropdown-item chinhsuathongbao" data-idthongbao="<%= thongbao._id %>" data-tieude="<%= thongbao.tieude %>" data-noidung="<%= thongbao.noidung %>" data-toggle="modal" data-target="#chinhsuathongbao">Chỉnh sửa </a>
+                                        <a class="dropdown-item xoathongbao" data-idthongbao="<%= thongbao._id %>" data-toggle="modal" data-target="#xoathongbao">Xoá</a>
+                                    </div>
+                                    <% } %>
+                                        <% if(thongtinsinhvien.chucvu == "khoa"){ %>
+                                            <% if(thongtinsinhvien.hovaten == thongbao.phongvakhoa){ %>
+                                                <button class="btn btn-link dropdown-toggle " type="button" data-toggle="dropdown">
+                                            <i  class="fa fa-ellipsis-h "></i>
+                                        </button>
+                                                <div class="dropdown-menu dropdown-menu-right ">
+                                                    <a class="dropdown-item chinhsuathongbao" data-idthongbao="<%= thongbao._id %>" data-tieude="<%= thongbao.tieude %>" data-noidung="<%= thongbao.noidung %>" data-toggle="modal" data-target="#chinhsuathongbao">Chỉnh sửa </a>
+                                                    <a class="dropdown-item xoathongbao" data-idthongbao="<%= thongbao._id %>" data-tieude="<%= thongbao.tieude %>" data-toggle="modal" data-target="#xoathongbao">Xoá</a>
+                                                </div>
+                                                <% } %>
+                                                    <% } %>
+                                                        <a href="/trangchitietthongbao/<%= thongbao._id %>">
+                                                            <div class="card-body border-bottom border-primary">
+                                                                <div class="row align-items-center no-gutters">
+                                                                    <div class="col mr-2">
+                                                                        <div class="text-uppercase text-primary font-weight-bold text-xs mb-1">
+                                                                            <%= thongbao.tieude %>
+                                                                        </div>
+                                                                        <div class="text-dark text-muted mb-0"><small><%= thongbao.thoigian %></small></div>
+                                                                        <% if(thongbao.chucvu == "khoa"){ %>
+                                                                            <div class="text-dark text-muted mb-0"><small>Đăng bởi: Khoa <%= thongbao.phongvakhoa %> </small></div>
+                                                                            <% }else{ %>
+                                                                                <div class="text-dark text-muted mb-0"><small>Đăng bởi: <%= thongbao.phongvakhoa %></small></div>
+                                                                                <% } %>
+                                                                                    <div class="text-dark font-weight-bold h5 mb-0 noidungthongbao">
+                                                                                        <%= thongbao.noidung %>
+                                                                                    </div>
+
+                                                                    </div>
+                                                                </div>
+                                                            </div>
+                                                        </a>
+                            </div>
+                            <% }) %>
+                    </div>
+                </div>
+                <div>
+                    <div class="col-md-6 align-self-center">
+                        <% if(soluongtrang != 0){ %>
+                            <p id="dataTable_info" class="dataTables_info" role="status" aria-live="polite">Tổng:
+                                <%= soluongtrang %> trang</p>
+                            <% }else{ %>
+                                <p id="dataTable_info" class="dataTables_info" role="status" aria-live="polite">Hiện chưa có thông báo nào</p>
+                                <% } %>
+                    </div>
+                    <div class="col-md-6">
+                        <nav aria-label="Page navigation example" class="d-lg-flex justify-content-lg-end dataTables_paginate paging_simple_numbers">
+                            <ul class="pagination pg-blue">
+                                <% for(var i=1; i<=Number(soluongtrang); i++) {%>
+                                    <% if(i == Number(trangdangxem)){ %>
+                                        <li class="page-item active">
+                                            <a href="/trangthongbao?phongvakhoa=<%= phongvakhoadangxem %>&trang=<%= i %>" class="page-link">
+                                                <%= i %> <span class="sr-only">(current)</span></a>
+                                        </li>
+                                        <% }else{ %>
+                                            <li class="page-item">
+                                                <a href="/trangthongbao?phongvakhoa=<%= phongvakhoadangxem %>&trang=<%= i %>" class="page-link">
+                                                    <%= i %>
+                                                </a>
+                                            </li>
+                                            <% } %>
+                                                <% } %>
+                            </ul>
+                        </nav>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <script src="/javascripts/SinhVien/chinhsuathongbao.js"></script>
+    <script src="/javascripts/SinhVien/xoathongbao.js"></script>
+</body>
+
+</html>

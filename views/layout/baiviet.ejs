@@ -1,0 +1,183 @@
+<% tatcabaiviet.forEach(function(baiviet){%>
+    <% tatcasinhvien.forEach(function(sinhvien){ %>
+        <% if(baiviet.email==sinhvien.email){ %>
+            <div class="card mb-6 cardtintuc col-s-9 col-12" id="<%=baiviet.mabaiviet%>">
+                <div class="card-header ">
+                    <div class="d-flex justify-content-between align-items-center ">
+                        <div class="d-flex justify-content-between align-items-center ">
+                            <div class="mr-2 ">
+                                <a href="/trangcanhan/<%= sinhvien.email %>"><img style="width: 50px" class="rounded-circle avatar" src="anhdaidien/<%= sinhvien.anhdaidien  %>" alt=" "></a>
+                            </div>
+                            <div class="ml-2 ">
+                                <a class="text-decoration-none text-dark" href="/trangcanhan/<%= sinhvien.email %>">
+                                    <div class="h5 m-0 ">
+                                        <%= sinhvien.hovaten  %>
+                                    </div>
+                                </a>
+                            </div>
+                        </div>
+                        <div>
+                            <% if(thongtinsinhvien.chucvu == "admin" || thongtinsinhvien.email == baiviet.email){ %>
+                                <div class="dropdown">
+                                    <button class="btn btn-link dropdown-toggle " type="button" data-toggle="dropdown">
+                                            <i  class="fa fa-ellipsis-h "></i>
+                                        </button>
+                                    <div class="dropdown-menu dropdown-menu-right ">
+                                        <a class="dropdown-item chinhsuabaiviet" data-mabaiviet="<%= baiviet.mabaiviet %>" data-noidungbaiviet="<%= baiviet.noidung %>" data-toggle="modal" data-target="#chinhsuabaivietmodal">Chỉnh sửa </a>
+                                        <a class="dropdown-item xoabaiviet" data-mabaiviet="<%= baiviet.mabaiviet %>" data-toggle="modal" data-target="#xoabaivietmodal">Xoá</a>
+                                    </div>
+                                </div>
+                                <% } %>
+
+                        </div>
+                    </div>
+
+                </div>
+
+                <div class="card-body">
+                    <div class="text-muted h7 mb-2 "> <i class="fas fa-clock " aria-hidden="true "></i>Đăng lúc:
+                        <%= baiviet.thoigiandang  %>
+                    </div>
+
+                    <p class="card-text txt-text" id="noidungbaiviet<%= baiviet.mabaiviet %>">
+                        <div id="noidungbaiviet<%= baiviet.mabaiviet %>">
+                            <%= baiviet.noidung %>
+                        </div>
+                    </p>
+                    <% if(baiviet.hinhanh.length != 0){ %>
+                        <div class="lightbox-gallery">
+                            <div class="row photos">
+                                <div class="item">
+                                    <% baiviet.hinhanh.forEach(function(anh){ %>
+                                        <a href=" anhbaiviet/<%= anh %> " data-lightbox="photos "><img class="img-fluid " src="anhbaiviet/<%= anh %> "></a>
+                                        <% }) %>
+                                </div>
+                            </div>
+                        </div>
+                        <% }else{ %>
+                            <% if(baiviet.idVideoYoutube != ""){ %>
+                                <iframe class="col-s-9 col-12" width="400" height="315" src="https://www.youtube.com/embed/<%= baiviet.idVideoYoutube %>" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
+                                    allowfullscreen></iframe>
+                                <% } %>
+                                    <% } %>
+                </div>
+
+                <div class="card-footer border-bottom bg-light">
+                    <button class="btn btn-light fa fa-comment btn_binhluan" data-manguoidung="" data-mabaiviet=""> Bình luận</button>
+                </div>
+
+                <!-- Bình luận và hiển thị bình luận-->
+                <div class="hienthibinhluan">
+                    <div class="card shadow">
+                        <div style="overflow-x: auto;" class="card-body comment" id="" data-mabaiviet="">
+                            <div class="user-comment mb-3 hienbinhluan" id="hienbinhluan<%= baiviet.mabaiviet%>">
+                                <% tatcabinhluan.forEach(function(binhluan){ %>
+                                    <% if(binhluan.mabaiviet == baiviet.mabaiviet){ %>
+                                        <% if(binhluan.chucvu == "sinhvien"){ %>
+                                            <% tatcasinhvien.forEach(function(sinhvienbinhluan){ %>
+                                                <% if(binhluan.email == sinhvienbinhluan.email){ %>
+                                                    <div class="user-comment mb-3" id="<%=binhluan.mabinhluan%>">
+                                                        <div class="d-flex mb-2 ">
+                                                            <div class="mr-2 ">
+                                                                <a class="text-decoration-none text-dark" href="/trangcanhan/<%= sinhvienbinhluan.email %>"><img style="width: 50px; height: 50px" class="rounded-circle avatar" src="anhdaidien/<%= sinhvienbinhluan.anhdaidien  %>" alt=" "></a>
+                                                            </div>
+                                                            <div class="ml-2 mt-1 ">
+                                                                <p>
+                                                                    <a class="text-decoration-none text-dark" href="/trangcanhan/<%= sinhvienbinhluan.email %>">
+                                                                        <b><%= sinhvienbinhluan.hovaten  %></b>
+                                                                    </a>
+                                                                    <span class="text-muted"><%= binhluan.thoigiandang  %></span>
+                                                                </p>
+                                                                <p class="txt-text">
+                                                                    <%= binhluan.noidungbinhluan  %>
+                                                                        <% if(thongtinsinhvien.chucvu == "admin" || thongtinsinhvien.email == binhluan.email || thongtinsinhvien.email == baiviet.email){ %>
+                                                                            <small><a class="text-danger text-decoration-none xoabinhluan" data-mabinhluan="<%=binhluan.mabinhluan%>" data-toggle="modal" data-target="#xoabinhluanmodal">Xoá</a></small>
+                                                                            <% } %>
+                                                                </p>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                    <% } %>
+                                                        <% }) %>
+                                                            <% }else{ %>
+                                                                <% tatcataikhoan.forEach(function(sinhvienbinhluan){ %>
+                                                                    <% if(binhluan.email == sinhvienbinhluan.email){ %>
+                                                                        <div class="user-comment mb-3" id="<%=binhluan.mabinhluan%>">
+                                                                            <div class="d-flex mb-2 ">
+                                                                                <div class="mr-2 ">
+                                                                                    <a class="text-decoration-none text-dark" href="#"><img style="width: 50px; height: 50px" class="rounded-circle avatar" src="anhdaidien/<%= sinhvienbinhluan.anhdaidien  %>" alt=" "></a>
+                                                                                </div>
+                                                                                <div class="ml-2 mt-1 ">
+                                                                                    <p>
+                                                                                        <a class="text-decoration-none text-dark" href="#">
+                                                                                            <b><%= sinhvienbinhluan.hovaten  %></b>
+                                                                                        </a>
+                                                                                        <span class="text-muted"><%= binhluan.thoigiandang  %></span>
+                                                                                    </p>
+                                                                                    <p class="txt-text">
+                                                                                        <%= binhluan.noidungbinhluan  %>
+                                                                                            <% if(thongtinsinhvien.chucvu == "admin" || thongtinsinhvien.email == binhluan.email || thongtinsinhvien.email == baiviet.email){ %>
+                                                                                                <small><a class="text-danger text-decoration-none xoabinhluan" data-mabinhluan="<%=binhluan.mabinhluan%>" data-toggle="modal" data-target="#xoabinhluanmodal">Xoá</a></small>
+                                                                                                <% } %>
+                                                                                    </p>
+                                                                                </div>
+                                                                            </div>
+                                                                        </div>
+                                                                        <% } %>
+                                                                            <% }) %>
+                                                                                <% } %>
+                                                                                    <% } %>
+                                                                                        <% }) %>
+                            </div>
+                            <!--<div class="d-flex justify-content-between align-items-center">-->
+                            <form id="dangbinhluan<%= baiviet.mabaiviet %>" name="dangbinhluan<%= baiviet.mabaiviet %>">
+                                <div class="d-flex justify-content-between align-items-center">
+                                    <div class="align-items-center">
+                                        <img style="width: 50px;" class="rounded-circle avatar" src="anhdaidien/<%= thongtinsinhvien.anhdaidien%>" alt=" ">
+                                    </div>
+
+                                    <input id="mabaiviet<%= baiviet.mabaiviet %>" value="<%= baiviet.mabaiviet %>" type="text" style="display: none">
+                                    <textarea id="noidungbinhluan<%= baiviet.mabaiviet %>" class="form-control input-login txt_binhluan" cols="200" type="text" placeholder="Viết bình luận... "></textarea>
+                                    <button type="submit" class='btn btn-primary btn_dangbinhluan btn'>Gửi</button>
+                                </div>
+                            </form>
+                            <script>
+                                $("#dangbinhluan<%= baiviet.mabaiviet %>").submit(function(e) {
+                                    //chống load trang
+                                    e.preventDefault();
+                                    var mabaiviet = $("#mabaiviet<%= baiviet.mabaiviet %>").val();
+                                    var noidungbinhluan = $("#noidungbinhluan<%= baiviet.mabaiviet %>").val();
+                                    if (noidungbinhluan == "") {
+                                        alert("Vui lòng nhâp nội dung bình luận");
+                                    } else {
+                                        var dataform = new FormData();
+                                        dataform.append("mabaiviet", mabaiviet);
+                                        dataform.append("noidungbinhluan", noidungbinhluan)
+                                        $.ajax({
+                                            type: 'POST',
+                                            url: '/dangbinhluan',
+                                            cache: false,
+                                            contentType: false,
+                                            processData: false,
+                                            data: dataform,
+                                            success: function(data) {
+                                                $('#hienbinhluan<%= baiviet.mabaiviet%>').append(data)
+                                            },
+                                            error: function() {
+                                                alert("Đăng bình luận không thành công");
+                                            }
+
+                                        })
+                                        $("#noidungbinhluan<%= baiviet.mabaiviet %>").val("");
+                                    }
+                                });
+                            </script>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <% } %>
+                <% }) %>
+                    <% }) %>
+                        <script src="/javascripts/SinhVien/xoabaiviet.js"></script>
+                        <script src="/javascripts/SinhVien/chinhsuabaiviet.js"></script>

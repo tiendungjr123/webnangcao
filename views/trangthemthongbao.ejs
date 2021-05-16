@@ -1,0 +1,105 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Thêm thông báo</title>
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.16.0/umd/popper.min.js"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+    <link rel="stylesheet" href="/stylesheets/style.css" />
+
+</head>
+
+<body>
+    <div class="pos-f-t">
+        <nav class="navbar navbar-dark bg-dark">
+            <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarToggleExternalContent" aria-controls="navbarToggleExternalContent" aria-expanded="false" aria-label="Toggle navigation">
+      <span class="navbar-toggler-icon"></span>
+    </button>
+        </nav>
+        <div class="collapse" id="navbarToggleExternalContent">
+            <%- include('./layout/linktrang.ejs') %>
+        </div>
+    </div><br><br>
+    <div class="row">
+        <div class="container col-s-9 col-8">
+            <h3>Thêm thông báo</h3>
+            <form action="/themthongbao" id="themthongbao" method="POST">
+                <div class="form-group">
+                    <div class="card shadow">
+                        <div class="card-body">
+                            <label for="phong_khoa">Phòng, Khoa</label>
+                            <div class="form-row">
+                                <div class="col">
+                                    <% if(thongtinsinhvien.chucvu == "admin"){ %>
+                                        <select class="form-control" name="phongvakhoa" id="phongvakhoa">
+                                        <optgroup label="Phòng">
+                                            <% phongvakhoa.forEach(function(thongtin){%> 
+                                                <% if(thongtin.chucvu == "phong"){ %> 
+                                                    <option value="<%= thongtin.ten %>"> <%= thongtin.ten %> </option>
+                                                <% } %> 
+                                            <% }) %> 
+                                        </optgroup>
+                                        <optgroup label="Khoa">
+                                            <% phongvakhoa.forEach(function(thongtin){%> 
+                                                <% if(thongtin.chucvu == "khoa"){ %> 
+                                                    <option value="<%= thongtin.ten %>">Khoa <%= thongtin.ten %> </option>
+                                                <% } %> 
+                                            <% }) %> 
+                                        </optgroup>
+                                    </select>
+                                        <% }else{ %>
+                                            <select class="form-control" name="phongvakhoa" id="phongvakhoa">
+                                        <% phongvakhoa.forEach(function(thongtin){%> 
+                                            <% if(thongtin.ten == thongtinsinhvien.khoa){ %> 
+                                                <option value="<%= thongtin.ten %>"> <%= thongtin.ten %> </option>
+                                            <% } %> 
+                                        <% }) %> 
+                                    </select>
+                                            <% } %>
+                                </div>
+                            </div>
+                            <div class="form-group">
+                                <label for="username">Tiêu đề</label>
+                                <div class="controls">
+                                    <input type="text" class="form-control" id="tieude" name="tieude">
+                                </div>
+                            </div>
+                            <div class="form-group">
+                                <label for="username">Nội dung </label>
+                                <div class="controls">
+                                    <textarea name="noidung" id="noidung" class="col-s-9 col-12" rows="10"></textarea>
+                                </div>
+                            </div>
+                            <% if(locals.successTTB){ %>
+                                <div class="alert alert-success">
+                                    <p>
+                                        <%= successTTB %>
+                                    </p>
+                                </div>
+                                <% } %>
+                                    <% if(locals.errorTTB){ %>
+                                        <div class="alert alert-danger">
+                                            <p>
+                                                <%= errorTTB %>
+                                            </p>
+                                        </div>
+                                        <% } %>
+                                            <button type="submit" class="btn btn-success">Thêm thông báo</button>
+
+                        </div>
+                    </div>
+                </div>
+            </form>
+        </div>
+    </div>
+
+</body>
+<script src="/socket.io/socket.io.js"></script>
+<script src="/javascripts/main.js"></script>
+
+</html>
